@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Oral History Amplified</h1>
+
+    <p><a href="https://amplify.sl.nsw.gov.au/">Amplify</a> is the State Library of
+        NSW interface for crowd-sourcing
+    corrections to transcripts of oral history recordings.  This site takes completed
+    transcripts from Amplify and uses Natural Language Processing techniques to
+    attempt to add value to them: topic segmentation and entity extraction.</p>
+
+    <p>Click on the links below to view versions of these transcripts.</p>
+
+    <ul>
+      {% for t in transcripts %}
+          {% if t['percent_completed'] == 100 %}
+        <li><a href="/transcript/{{t['uid']}}">{{t['title']}}</a></li>
+          {%  endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+
+{% endblock %}

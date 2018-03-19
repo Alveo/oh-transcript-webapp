@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block handlebars_template %}
+
+{% raw %}
+<script id="entry-template" type="text/x-handlebars-template">
+
+    <audio id="audioplayer" src="{{ audio_url }}"></audio>
+
+    <div class="header" style="background-image: url('{{ image_url }}'); ">
+        <h1>{{title}}</h1>
+        <div class="image-caption">
+            {{{ image_caption }}}
+        </div>
+    </div>
+
+    <div class="description">
+        <div class="container">
+        {{{description}}}
+        <p>View <a href="{{url}}">State Library NSW record</a>.
+        View on <a href="https://amplify.sl.nsw.gov.au/transcripts/{{ uid }}">Amplify</a>
+        </p>
+        </div>
+    </div>
+
+    <div class="container">
+      <p id="transcript">
+          <p>Topics found in the transcript. Click on a topic below to view the transcript.
+            <strong>Keywords</strong> are significant words from the topic.
+            <strong>Entities</strong> are named entities found by
+            <a href="http://www.dbpedia-spotlight.org/">DBPedia Spotlight</a></p>
+        {{#each topics}}
+        <div class="card">
+          <div class="card-header" data-toggle="collapse" title="Click to toggle display" data-target="#topic-{{ start }}" aria-expanded="false">
+            {{topicplayer ../lines ../audio_url start end}}
+            <div><strong>Keywords:</strong> {{#each keywords}}<span class="keyword">{{this}}</span> {{/each}}</div>
+            <div><strong>Entities:</strong>
+                {{#each entities}}
+                <a class="mr-1 badge badge-secondary" title="View on dbpedia" href="{{this.[1]}}" target="new">{{this.[0]}}</a>
+                {{/each}}
+            </div>
+          </div>
+
+          <div id="topic-{{ start }}" class="card-body collapse">
+            {{topic ../speakers ../lines ../audio_url start end}}
+          </div>
+        </div>
+        {{/each}}
+    </div>
+
+    {{!--
+    <div id="distances">
+        <table>
+            {{#each topic_distances}}
+            <tr>
+                {{#each this}}
+                <td style="background: {{grey this}}; width: 10px; height: 10px;"> </td>
+                {{/each}}
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    --}}
+
+  </div>
+</script>
+{% endraw %}
+{% endblock %}
+
+
+{% block handlebarsjs %}
+<script>
+  var source   = document.getElementById("entry-template").innerHTML;
+  var template = Handlebars.compile(source);
+
+  var url = '/transcripts/{{uid}}.json';
+
+  $.getJSON(url, function (data) {
+      $(".lds-facebook").hide();
+      $("#content").html(template(data));
+      document.getElementById('audioplayer').addEventListener("timeupdate", timeUpdateListener);
+  });
+
+</script>
+{% endblock %}
+
+{% block content %}
+    <div id="spinner">
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
+{% endblock %}
