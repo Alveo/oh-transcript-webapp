@@ -20,3 +20,4 @@ urllib3==1.22
 SciPy
 sklearn
 pyspotlight
+gunicorn
