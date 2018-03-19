@@ -68,7 +68,7 @@ def get_transcript(uid):
     """Get the JSON transcript for the given document UID"""
 
     url = AMPLIFY_TRANSCRIPT_URL % uid
-    r = requests.get(url)
+    r = requests.get(url, verify=False)
     return r.json()
 
 
