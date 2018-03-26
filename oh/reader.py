@@ -39,7 +39,7 @@ def cached_json(url):
         with open(filename) as input:
             result = json.load(input)
     else:
-        r = requests.get(url)
+        r = requests.get(url, verify=False)
         result = r.json()
         with open(filename, 'w') as out:
             json.dump(result, out)
@@ -83,7 +83,7 @@ def read_transcript(uid):
         'transcript': []
     }
     meta = dict()
-    r = requests.get(url)
+    r = requests.get(url, verify=False)
     inheader = True
     for line in r.text.split('\n'):
         if inheader:
