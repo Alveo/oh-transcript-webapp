@@ -2,6 +2,10 @@
     enhanced version for presentation. """
 
 from nltk.tokenize.texttiling import TextTilingTokenizer
+import nltk
+nltk.download('stopwords')
+
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 import spotlight
