@@ -2,7 +2,7 @@
   "scripts": {
     "dokku": {
       "predeploy": "",
-      "postdeploy": "sed -i -e 's/scores)\/10/scores)\/\/10/' /app/.heroku/python/lib/python3.6/site-packages/nltk/tokenize/texttiling.py"
+      "postdeploy": "sed -i -e 's/scores)\\/10/scores)\\/\\/10/' /app/.heroku/python/lib/python3.6/site-packages/nltk/tokenize/texttiling.py"
     }
   }
 }
