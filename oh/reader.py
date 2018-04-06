@@ -10,8 +10,6 @@ CACHE_DIR = 'cache'
 if os.getenv('AMPLIFY_CACHE'):
     CACHE_DIR = os.getenv('AMPLIFY_CACHE')
 
-print("CACHE_DIR", CACHE_DIR)
-
 def parseline(line):
     """Parse one line of a transcript
 
