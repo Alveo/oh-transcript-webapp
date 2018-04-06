@@ -7,7 +7,10 @@ import json
 AMPLIFY_TEXT_URL = "https://amplify.sl.nsw.gov.au/transcript_files/%s.text?timestamps=1&speakers=1"
 AMPLIFY_TRANSCRIPT_URL = "https://amplify.sl.nsw.gov.au/transcripts/%s.json"
 CACHE_DIR = 'cache'
+if os.getenv('AMPLIFY_CACHE'):
+    CACHE_DIR = os.getenv('AMPLIFY_CACHE')
 
+print("CACHE_DIR", CACHE_DIR)
 
 def parseline(line):
     """Parse one line of a transcript
