@@ -28,15 +28,16 @@ def parseline(line):
         return '', '', ''
 
 
-def cached_json(url):
+def cached_json(url, force=False):
     """Get a url from the cache or
-    request"""
+    request. If force=True, always make the request and update
+    the cache"""
 
     if not os.path.exists(CACHE_DIR):
         os.makedirs(CACHE_DIR)
 
     filename = os.path.join(CACHE_DIR, url.replace('/','_').replace(':','.'))
-    if os.path.exists(filename):
+    if not force and os.path.exists(filename):
         with open(filename) as input:
             result = json.load(input)
     else:
@@ -103,23 +104,25 @@ def read_transcript(uid):
     return doc
 
 
-def get_transcript_list():
+def get_transcript_list(force=False):
     """Retrieve a list of available transcripts from
     the Amplify site, return a list of dictionaries"""
 
     url = "https://amplify.sl.nsw.gov.au/transcripts.json"
 
-    result = cached_json(url)
+    result = cached_json(url, force=force)
 
     if 'entries' in result:
-        return result['entries']
+        entries = sorted(result['entries'], key=lambda x: x['title'])
+
+        return entries
     else:
         return []
 
 
 if __name__=='__main__':
 
-    doc = get_transcript_list()
+    doc = get_transcript_list(force=True)
 
     import json
     print(json.dumps(doc, indent=True))

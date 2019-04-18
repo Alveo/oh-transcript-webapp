@@ -1,4 +1,4 @@
 
-from oh.webapp import app
+from oh.webapp import application
 
 
