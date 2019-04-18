@@ -3,6 +3,7 @@
 
 from nltk.tokenize.texttiling import TextTilingTokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
+from requests.exceptions import HTTPError
 
 import spotlight
 
@@ -112,7 +113,7 @@ def topic_entities(doc):
             for e in spotlight.annotate(url, document, confidence=0.5, support=50):
                 entities[e['surfaceForm']] = e['URI']
 
-        except spotlight.SpotlightException:
+        except (spotlight.SpotlightException, HTTPError):
             entities = {}
         doc['topics'][index]['entities'] = list(entities.items())
 
