@@ -17,7 +17,7 @@ python-dateutil==2.6.1
 requests>=2.20.0
 requests-oauthlib==0.8.0
 six==1.11.0
-urllib3==1.23
+urllib3==1.26.5
 SciPy
 sklearn
 pyspotlight
